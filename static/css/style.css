@@ -1,0 +1,111 @@
+/* ---------------------------
+   STYLE GLOBAL
+---------------------------- */
+
+body {
+    background-color: #f4f6f9;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ---------------------------
+   TITRES
+---------------------------- */
+
+h2, h3, h5 {
+    font-weight: bold;
+}
+
+/* ---------------------------
+   CARDS (FORM + DASHBOARD)
+---------------------------- */
+
+.card {
+    border-radius: 12px;
+    border: none;
+    transition: 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* ---------------------------
+   BOUTONS
+---------------------------- */
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* ---------------------------
+   NAVBAR
+---------------------------- */
+
+.navbar {
+    padding: 12px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* ---------------------------
+   TABLEAU
+---------------------------- */
+
+table {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table thead {
+    background-color: #007bff;
+    color: white;
+}
+
+/* ---------------------------
+   FOOTER
+---------------------------- */
+
+footer {
+    font-size: 14px;
+    color: #666;
+}
+/* =========================
+   PAGE D'ACCUEIL
+========================= */
+
+.home-container {
+    margin-top: 80px;
+    padding: 20px;
+}
+
+.title {
+    font-size: 40px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 40px;
+}
+
+.typed-text {
+    font-size: 18px;
+    color: #333;
+    white-space: pre-line;
+    min-height: 200px;
+    line-height: 1.6;
+}
+
+.btn-continue {
+    font-size: 18px;
+    padding: 10px 25px;
+    border-radius: 30px;
+}

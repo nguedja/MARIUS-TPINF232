@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+/* =========================
+   FOND DASHBOARD BLEU FONCÉ
+========================= */
+
+body {
+    background: linear-gradient(135deg, #0b1c3d);
+}
+
+/* conteneur principal */
+.dashboard-page {
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* titres */
+.dashboard-page h2,
+.dashboard-page h5 {
+    color: white;
+    font-weight: bold;
+}
+
+/* cards style moderne */
+.dashboard-page .card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    border: none;
+    transition: 0.3s;
+}
+
+.dashboard-page .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+</style>
+
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+
+        <div class="card shadow p-4">
+
+            <h3 class="text-center text-primary mb-4">
+                🎓 Formulaire de Feedback Étudiant
+            </h3>
+
+            <form method="POST">
+
+                <!-- Nom -->
+                <div class="mb-3">
+                    <label class="form-label">Nom étudiant </label>
+                    <input type="text" name="student_name" class="form-control">
+                </div>
+
+                <!-- Filière -->
+                <div class="mb-3">
+                    <label class="form-label">Filière</label>
+                    <select name="filiere" id="filiere" class="form-control" required>
+                        <option value="">Choisir une filière [semestre 2] :(precisement informatique pour plus de fiabilite)</option>
+                        <option value="Informatique">Informatique</option>
+                        <option value="Math">Math</option>
+                        <option value="Physique">Physique</option>
+                        <option value="Chimie">Chimie</option>
+                    </select>
+                </div>
+
+                <!-- Niveau -->
+                <div class="mb-3">
+                    <label class="form-label">Niveau</label>
+                    <select name="niveau" id="niveau" class="form-control" required>
+                        <option value="">Choisir un niveau</option>
+                    </select>
+                </div>
+
+                <!-- Cours -->
+                <div class="mb-3">
+                    <label class="form-label">Cours suivi</label>
+                    <select name="course" id="course" class="form-control" required>
+                        <option value="">Choisir un cours</option>
+                    </select>
+                </div>
+
+                <!-- Enseignant -->
+                <div class="mb-3">
+                    <label class="form-label">Nom de l'enseignant</label>
+                    <select name="teacher" id="teacher" class="form-control" required>
+                        <option value="">Choisir un enseignant</option>
+                    </select>
+                </div>
+
+                <!-- Satisfaction -->
+                <div class="mb-3">
+                    <label class="form-label">Niveau de satisfaction</label>
+                    <select name="satisfaction" class="form-control" required>
+                        <option value="1">1 - Très mauvais</option>
+                        <option value="2">2 - Mauvais</option>
+                        <option value="3">3 - Moyen</option>
+                        <option value="4">4 - Bon</option>
+                        <option value="5">5 - Excellent</option>
+                    </select>
+                </div>
+
+                <!-- Vote meilleur enseignant -->
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" name="best_teacher_vote" id="vote">
+                    <label class="form-check-label" for="vote">
+                        🏆 Je vote cet enseignant comme meilleur enseignant
+                    </label>
+                </div>
+
+                <!-- Commentaire -->
+                <div class="mb-3">
+                    <label class="form-label">Commentaire</label>
+                    <textarea name="comment" class="form-control" rows="3"></textarea>
+                </div>
+
+                <!-- Bouton -->
+                <button type="submit" class="btn btn-primary w-100">
+                    Envoyer le feedback
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- =========================
+     DONNÉES (FILIÈRE → NIVEAU → COURS → ENSEIGNANT)
+========================= -->
+<script>
+const data = {
+    "Informatique": {
+        "L2": {
+            "INF 232": ["PR NZEKON "],
+            "INF 212": ["DR NDOUNDAM"],
+            "INF 222": ["DR JIOMEKON"],
+            "MAT232" : ["DR KOKOMO"],
+            "INF 252":["DR EBELE"],
+            "INF 242":["PR MELATAGIA, DR MESSI"],
+            "INF 212":["DR NDOUNDAM"]
+        }
+    },
+
+    "Math": {
+        "L1": {
+            "Analyse": ["Dr E"],
+            "Algèbre": ["Dr F"]
+        }
+    },
+
+    // ✅ AJOUT PHYSIQUE
+    "Physique": {
+        "L1": {
+            "Mécanique": ["Dr Phys1"],
+            "Thermodynamique": ["Dr Phys2"]
+        },
+        "L2": {
+            "Électromagnétisme": ["Dr Phys3"]
+        }
+    },
+
+    // ✅ AJOUT CHIMIE
+    "Chimie": {
+        "L1": {
+            "Chimie Générale": ["Dr Chim1"],
+            "Atomistique": ["Dr Chim2"]
+        },
+        "L2": {
+            "Chimie Organique": ["Dr Chim3"],
+            "Chimie Analytique": ["Dr Chim4"]
+        }
+    }
+};
+</script>
+
+<!-- =========================
+     JAVASCRIPT DYNAMIQUE
+========================= -->
+<script>
+const filiere = document.getElementById("filiere");
+const niveau = document.getElementById("niveau");
+const course = document.getElementById("course");
+const teacher = document.getElementById("teacher");
+
+// FILIÈRE → NIVEAU
+filiere.addEventListener("change", function () {
+
+    niveau.innerHTML = `<option value="">Choisir un niveau</option>`;
+    course.innerHTML = `<option value="">Choisir un cours</option>`;
+    teacher.innerHTML = `<option value="">Choisir un enseignant</option>`;
+
+    if (!this.value) return;
+
+    Object.keys(data[this.value]).forEach(n => {
+        niveau.innerHTML += `<option value="${n}">${n}</option>`;
+    });
+});
+
+// NIVEAU → COURS
+niveau.addEventListener("change", function () {
+
+    course.innerHTML = `<option value="">Choisir un cours</option>`;
+    teacher.innerHTML = `<option value="">Choisir un enseignant</option>`;
+
+    const fil = filiere.value;
+    if (!fil || !this.value) return;
+
+    Object.keys(data[fil][this.value]).forEach(c => {
+        course.innerHTML += `<option value="${c}">${c}</option>`;
+    });
+});
+
+// COURS → ENSEIGNANT
+course.addEventListener("change", function () {
+
+    teacher.innerHTML = `<option value="">Choisir un enseignant</option>`;
+
+    const fil = filiere.value;
+    const niv = niveau.value;
+
+    if (!fil || !niv || !this.value) return;
+
+    data[fil][niv][this.value].forEach(t => {
+        teacher.innerHTML += `<option value="${t}">${t}</option>`;
+    });
+});
+</script>
+
+{% endblock %}

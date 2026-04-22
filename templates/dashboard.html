@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard-page">
+
+<div class="container">
+
+    <h2 class="text-center mb-4">
+        📊 Dashboard Analyse
+    </h2>
+
+    <!-- STATS -->
+    <div class="row text-center mb-4">
+
+        <div class="col-md-6">
+            <div class="card shadow p-3">
+                <h5>Total Feedbacks</h5>
+                <h2 class="text-primary">{{ total }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow p-3">
+                <h5>Moyenne Satisfaction</h5>
+                <h2 class="text-success">{{ avg_satisfaction }}</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FILIERE -->
+    <div class="card shadow p-4 mb-4">
+        <h5>📚 Filières</h5>
+        <canvas id="filiereChart"></canvas>
+    </div>
+
+    <!-- TEACHERS -->
+    <div class="card shadow p-4 mb-4">
+        <h5>🏆 Enseignants</h5>
+        <canvas id="teacherChart"></canvas>
+    </div>
+
+    <!-- SCATTER -->
+    <div class="card shadow p-4 mb-4">
+        <h5>🔵 Nuage de points satisfaction</h5>
+        <canvas id="scatterChart"></canvas>
+    </div>
+
+    <!-- REGRESSION -->
+    <div class="card shadow p-4 mb-4">
+        <h5>📈 Régression linéaire</h5>
+        <canvas id="regressionChart"></canvas>
+    </div>
+
+</div>
+
+</div>
+
+<script>
+const filiereLabels = {{ (filiere_data or []) | map(attribute=0) | list | tojson }};
+const filiereValues = {{ (filiere_data or []) | map(attribute=1) | list | tojson }};
+
+const teacherLabels = {{ (teacher_votes or []) | map(attribute=0) | list | tojson }};
+const teacherValues = {{ (teacher_votes or []) | map(attribute=1) | list | tojson }};
+
+const scatterX = {{ scatter_x | default([]) | tojson }};
+const scatterY = {{ scatter_y | default([]) | tojson }};
+
+const regressionLine = {{ regression_line | default([]) | tojson }};
+</script>
+
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+
+{% endblock %}
